@@ -21,8 +21,8 @@
 
 .hero-left p{
     color: #171717;
-    font-size: 100px;
-    font-weight: 700;
+    font-size: 60px;
+    font-weight: 500;
 }
 
 .hero-hand-icon{
@@ -51,3 +51,10 @@
     font-weight: 500;
 
 }
+.hero-right{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
