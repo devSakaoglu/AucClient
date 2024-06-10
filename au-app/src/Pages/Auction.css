@@ -1,0 +1,25 @@
+.auction {
+  padding: 20px;
+}
+
+.product {
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.bid-form {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bid-form input {
+  flex: 1;
+  padding: 8px;
+  margin-right: 8px;
+  border: 1px solid #ccc;
+}
