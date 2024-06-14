@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 
-const BidForm = ({ productId, onBid }) => {
+const BidForm = ({ onBid }) => {
   const [bidAmount, setBidAmount] = useState('');
 
-  // Teklif gönderme işlevi
   const handleSubmit = (e) => {
     e.preventDefault();
     if (bidAmount) {
-      // BidForm bileşeninden gelen verileri Auction bileşenine iletiyoruz
-      onBid(productId, parseFloat(bidAmount));
+      onBid(parseFloat(bidAmount));
       setBidAmount('');
     }
   };

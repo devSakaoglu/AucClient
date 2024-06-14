@@ -1,19 +1,13 @@
 import React from 'react';
 import './Item.css';
 
-const Item = ({ image, name, new_price, old_price }) => {
+const Item = ({ id, name, image, new_price, old_price }) => {
   return (
-    <div className='item'>
+    <div className="item">
       <img src={image} alt={name} />
-      <p>{name}</p>
-      <div className="item-price">
-        <div className="item-price-new">
-          ${new_price.toFixed(2)}
-        </div>
-        <div className="item-price-old">
-          ${old_price.toFixed(2)}
-        </div>
-      </div>
+      <h2>{name}</h2>
+      <p>New Price: ${new_price.toFixed(2)}</p>
+      <p>Old Price: ${old_price.toFixed(2)}</p>
     </div>
   );
 };
