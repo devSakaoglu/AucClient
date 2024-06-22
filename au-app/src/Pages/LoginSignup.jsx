@@ -15,7 +15,7 @@ const LoginSignup = ({ onLogin }) => {
 
     try {
       // API'ye POST isteği gönderme
-      const response = await fetch('/api/login', {
+      const response = await fetch('http://localhost:5000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // JSON formatında veri gönderileceğini belirttik
@@ -25,6 +25,7 @@ const LoginSignup = ({ onLogin }) => {
           password,
         }),
       });
+      console.log(response.body)
 
       if (response.ok) { // Eğer API isteği başarılı ise
         const data = await response.json(); // API'den dönen veriyi JSON formatına dönüştürdük

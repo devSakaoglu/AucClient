@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
@@ -10,11 +10,21 @@ import Cart from './Pages/Cart';
 import Auction from './Pages/Auction';
 import AuctionDetail from './Pages/AuctionDetail';
 import Footer from './Components/Footer/Footer';
-import Register from './Pages/Register'; // Register sayfasını import ettik
+import Register from './Pages/Register';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    const storedLoggedIn = localStorage.getItem('loggedIn') === 'true';
+
+    if (storedLoggedIn && storedUsername) {
+      setUsername(storedUsername);
+      setLoggedIn(true);
+    }
+  }, []);
 
   const handleLogin = (user) => {
     setUsername(user);
@@ -24,6 +34,8 @@ function App() {
   const handleLogout = () => {
     setUsername('');
     setLoggedIn(false);
+    localStorage.removeItem('username');
+    localStorage.removeItem('loggedIn');
   };
 
   return (
@@ -40,8 +52,7 @@ function App() {
           <Route path='/auction/:productId' element={<AuctionDetail />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/login' element={<LoginSignup onLogin={handleLogin} />} />
-          <Route path='/register' element={<Register />} /> {/* Register sayfasını tanımladık */}
-          {/* Kullanıcı giriş yaparsa /login yolundan ana yola yönlendirme */}
+          <Route path='/register' element={<Register />} />
           {loggedIn ? <Navigate to="/" /> : null}
         </Routes>
         <Footer />
