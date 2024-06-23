@@ -4,7 +4,7 @@ import './LoginSignup.css'; // LoginSignup için CSS dosyasını import ettik
 
 const LoginSignup = ({ onLogin }) => {
   // State'lerin tanımlanması
-  const [usernameOrEmail, setUsernameOrEmail] = useState(''); // Kullanıcı adı veya e-posta state'i
+  const [email, setUsernameOrEmail] = useState(''); // Kullanıcı adı veya e-posta state'i
   const [password, setPassword] = useState(''); // Şifre state'i
   const [error, setError] = useState(''); // Hata mesajı state'i
   const [redirect, setRedirect] = useState(false); // Yönlendirme kontrolü için state
@@ -15,17 +15,17 @@ const LoginSignup = ({ onLogin }) => {
 
     try {
       // API'ye POST isteği gönderme
-      const response = await fetch('http://localhost:5000/login', {
+      const response = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // JSON formatında veri gönderileceğini belirttik
         },
         body: JSON.stringify({ // Gönderilecek veri
-          usernameOrEmail,
+          email,
           password,
         }),
       });
-      console.log(response.body)
+      console.log(await response.json())
 
       if (response.ok) { // Eğer API isteği başarılı ise
         const data = await response.json(); // API'den dönen veriyi JSON formatına dönüştürdük
@@ -50,7 +50,7 @@ const LoginSignup = ({ onLogin }) => {
       <form onSubmit={handleSubmit} className="login-form"> {/* Form elementi */}
         <input
           type="text"
-          value={usernameOrEmail}
+          value={email}
           onChange={(e) => setUsernameOrEmail(e.target.value)} // Kullanıcı adı veya e-posta değiştiğinde state'i güncelle
           placeholder="Username" // Input için placeholder metni
           required // Zorunlu alan olduğunu belirttik
