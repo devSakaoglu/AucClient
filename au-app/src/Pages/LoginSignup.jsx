@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Navigate, Link } from 'react-router-dom'; // Navigate ve Link bileşenlerini import ettik
 import './LoginSignup.css'; // LoginSignup için CSS dosyasını import ettik
+import { instance } from '../api';
 
 const LoginSignup = ({ onLogin }) => {
   // State'lerin tanımlanması
@@ -15,24 +16,29 @@ const LoginSignup = ({ onLogin }) => {
 
     try {
       // API'ye POST isteği gönderme
-      const response = await fetch('http://localhost:5000/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', // JSON formatında veri gönderileceğini belirttik
-        },
-        body: JSON.stringify({ // Gönderilecek veri
-          email,
-          password,
-        }),
+      // const response = await fetch('http://localhost:5000/api/login', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json', // JSON formatında veri gönderileceğini belirttik
+      //   },
+      //   body: JSON.stringify({ // Gönderilecek veri
+      //     email,
+      //     password,
+      //   }),
+      // });
+      const response = await instance.post('/login ', {
+ email, password 
+    
+        
       });
-      console.log(await response.json())
+      console.log( response)
 
       if (response.ok) { // Eğer API isteği başarılı ise
-        const data = await response.json(); // API'den dönen veriyi JSON formatına dönüştürdük
+        const data =  response.data; // API'den dönen veriyi JSON formatına dönüştürdük
         onLogin(data.username); // onLogin prop'unu kullanarak başarılı giriş durumunu uygulamaya bildirdik
         setRedirect(true); // Yönlendirme yapılacağını belirttik
       } else { // Eğer API isteği hata döndürdüyse
-        const errorData = await response.json(); // Hata mesajını JSON formatına dönüştürdük
+        const errorData =  response.data; // Hata mesajını JSON formatına dönüştürdük
         setError(errorData.message); // Hata mesajını state'e kaydettik
       }
     } catch (error) {
