@@ -1,82 +1,68 @@
 import React, { useState } from 'react';
-import { Navigate, Link } from 'react-router-dom'; // Navigate ve Link bileşenlerini import ettik
-import './LoginSignup.css'; // LoginSignup için CSS dosyasını import ettik
+import { Navigate, Link } from 'react-router-dom';
+import './LoginSignup.css';
 import { instance } from '../api';
 
 const LoginSignup = ({ onLogin }) => {
-  // State'lerin tanımlanması
-  const [email, setUsernameOrEmail] = useState(''); // Kullanıcı adı veya e-posta state'i
-  const [password, setPassword] = useState(''); // Şifre state'i
-  const [error, setError] = useState(''); // Hata mesajı state'i
-  const [redirect, setRedirect] = useState(false); // Yönlendirme kontrolü için state
+  const [email, setUsernameOrEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [redirect, setRedirect] = useState(false);
 
-  // Form submit edildiğinde çalışacak işlev
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Formun default submit işlemini engelledik
+    e.preventDefault();
 
     try {
-      // API'ye POST isteği gönderme
-      // const response = await fetch('http://localhost:5000/api/login', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json', // JSON formatında veri gönderileceğini belirttik
-      //   },
-      //   body: JSON.stringify({ // Gönderilecek veri
-      //     email,
-      //     password,
-      //   }),
-      // });
-      const response = await instance.post('/login ', {
- email, password 
-    
-        
+      const response = await instance.post('/login', {
+        email,
+        password
       });
-      console.log( response)
 
-      if (response.ok) { // Eğer API isteği başarılı ise
-        const data =  response.data; // API'den dönen veriyi JSON formatına dönüştürdük
-        onLogin(data.username); // onLogin prop'unu kullanarak başarılı giriş durumunu uygulamaya bildirdik
-        setRedirect(true); // Yönlendirme yapılacağını belirttik
-      } else { // Eğer API isteği hata döndürdüyse
-        const errorData =  response.data; // Hata mesajını JSON formatına dönüştürdük
-        setError(errorData.message); // Hata mesajını state'e kaydettik
+      if (response.status === 200) {
+        const data = response.data;
+        onLogin(data.appUser.name); // Make sure data contains the necessary user information
+        setRedirect(true);
+      } else {
+        const errorData = response.data;
+        setError(errorData.message);
       }
     } catch (error) {
-      console.error('Login error:', error); // Herhangi bir hata durumunda konsola hata mesajını yazdırdık
-      setError('Something went wrong. Please try again.'); // Genel hata mesajını gösterdik
+      console.error('Login error:', error);
+      setError('Something went wrong. Please try again.');
     }
   };
 
-  if (redirect) { // Eğer yönlendirme yapılması gerekiyorsa
-    return <Navigate to='/' />; // Ana sayfaya yönlendirme yap
+  if (redirect) {
+    return <Navigate to='/shop' />;
   }
 
   return (
-    <div className="login-signup-container"> {/* Ana div elementi */}
-      <form onSubmit={handleSubmit} className="login-form"> {/* Form elementi */}
+    <div className="login-signup-container">
+      <form onSubmit={handleSubmit} className="login-form">
+        <h2>Login</h2>
         <input
-          type="text"
+          type="email"
           value={email}
-          onChange={(e) => setUsernameOrEmail(e.target.value)} // Kullanıcı adı veya e-posta değiştiğinde state'i güncelle
-          placeholder="Username" // Input için placeholder metni
-          required // Zorunlu alan olduğunu belirttik
+          onChange={(e) => setUsernameOrEmail(e.target.value)}
+          placeholder="Email"
+          required
         />
         <input
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)} // Şifre değiştiğinde state'i güncelle
-          placeholder="Password" // Input için placeholder metni
-          required // Zorunlu alan olduğunu belirttik
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          required
         />
-        {error && <p className="error-message">{error}</p>} {/* Hata varsa hata mesajını göster */}
-        <button type="submit" className="login-button">Login</button> {/* Login butonu */}
+        {error && <p className="error-message">{error}</p>}
+        <button type="submit" className="login-button">Login</button>
+        <div className="register-link-container">
+          <span>New User?</span>
+          <Link to="/register" className="register-button">Register</Link>
+        </div>
       </form>
-      <div className="register-link-container">
-        <span>New User?</span>
-        <Link to="/register" className="register-button">Register</Link>
-      </div>
     </div>
   );
 };
 
-export default LoginSignup; // LoginSignup bileşenini dışa aktardık
+export default LoginSignup;

@@ -1,40 +1,73 @@
 import React, { useState } from 'react';
-import './Register.css'; // Register için CSS dosyası eklendi
+import './Register.css';
+import { instance } from '../api';
 
 const Register = () => {
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  const validateName = (name) => {
+    const nameRegex = /^[A-Za-z\s]{3,}$/;
+    return nameRegex.test(name) && !/\d/.test(name);
+  };
+
+  const validateSurname = (surname) => {
+    const surnameRegex = /^[A-Za-z\s]{3,}$/;
+    return surnameRegex.test(surname) && !/\d/.test(surname);
+  };
+
+  const validatePhone = (phone) => {
+    return typeof phone === 'string';
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 6;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (
+      !validateName(name) ||
+      !validateSurname(surname) ||
+      !validatePhone(phone) ||
+      !validateEmail(email) ||
+      !validatePassword(password)
+    ) {
+      setError('Please check your inputs and try again.');
+      return;
+    }
+
     try {
-      // Backend'e POST isteği gönderme
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
+      const response = await instance.post('signup', 
+        {
+          name,
+          surname,
+          phone,
           email,
           password,
-        }),
-      });
+        },
+      );
 
-      if (response.ok) {
-        // Başarılı kayıt durumunda kullanıcıya bilgi ver
+      if (response.status === 201) {
         alert('Registration successful! You can now login.');
-        // Formu sıfırla
-        setUsername('');
+        setName('');
+        setSurname('');
+        setPhone('');
         setEmail('');
         setPassword('');
         setError('');
       } else {
-        // Hata durumunda hata mesajını göster
-        const errorData = await response.json();
+        const errorData = await response.error();
         setError(errorData.message);
       }
     } catch (error) {
@@ -45,14 +78,35 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      <h2>Register</h2>
       <form onSubmit={handleSubmit} className="register-form">
+        <h2>Register</h2>
         {error && <p className="error-message">{error}</p>}
         <input
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Enter your username"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter your name"
+          required
+        />
+        <input
+          type="text"
+          value={surname}
+          onChange={(e) => setSurname(e.target.value)}
+          placeholder="Enter your surname"
+          required
+        />
+        <input
+          type="phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Enter your phone"
+          required
+        />
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter your email"
           required
         />
         <input
@@ -62,7 +116,7 @@ const Register = () => {
           placeholder="Enter your password"
           required
         />
-        <button type="submit">Register</button>
+        <button type="submit" className="register-button">Register</button>
       </form>
     </div>
   );
