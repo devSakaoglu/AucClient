@@ -1,11 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './CSS/ShopCategory.css';
 import { ShopContext } from '../Context/ShopContext';
 import Item from '../Components/Auction/Item';
 import dropdown_icon from '../Components/Assets/dropdown_icon.png';
 import '../Pages/ShopCategory.css'
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const ShopCategory = (props) => {
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/products/me')
+      .then(response => {
+        console.log(response.data)
+      } 
+    ).catch(error => {
+      console.error('Error fetching data:', error);
+    });
+   
+
+   } , []);
   const { all_product, addBid } = useContext(ShopContext);
 
   const handlePlaceBid = (productId) => {
