@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import BidForm from '../Components/Auction/BidForm';
 import BidList from '../Components/Auction/BidList';
 import data_product from '../data/product';
@@ -45,8 +45,14 @@ const AuctionDetail = ({ user }) => {
             ))}
           </div>
           <div className="button-group">
-            <BidForm onBid={handleBid} />
-            <button className="message-seller-btn">Message Seller</button>
+            {user ? (
+              <>
+                <BidForm onBid={handleBid} />
+                <button className="message-seller-btn">Message Seller</button>
+              </>
+            ) : (
+              <p>Please <Link to="/login">login</Link> to place a bid or message the seller.</p>
+            )}
           </div>
         </div>
       </div>

@@ -25,10 +25,14 @@ const Navbar = ({ loggedIn, onLogout, username }) => {
       </div>
       <ul className="nav-menu">
         <li onClick={() => { setMenu("shop") }}><Link style={{ textDecoration: 'none' }} to='/'>Shop{menu === "shop" ? <hr /> : null}</Link></li>
-        <li onClick={() => { setMenu("mens") }}><Link style={{ textDecoration: 'none' }} to='/mens'>Men{menu === "mens" ? <hr /> : null}</Link></li>
-        <li onClick={() => { setMenu("womens") }}><Link style={{ textDecoration: 'none' }} to='/womens'>Women{menu === "womens" ? <hr /> : null}</Link></li>
-        <li onClick={() => { setMenu("kids") }}><Link style={{ textDecoration: 'none' }} to='/kids'>Kids{menu === "kids" ? <hr /> : null}</Link></li>
-        <li onClick={() => { setMenu("auction") }}><Link style={{ textDecoration: 'none' }} to='/auction'>Auction{menu === "auction" ? <hr /> : null}</Link></li>
+        <li className="category-dropdown">
+          <span>Category</span>
+          <div className="dropdown-content">
+            <Link to="/mens">Men</Link>
+            <Link to="/womens">Women</Link>
+            <Link to="/kids">Kids</Link>
+          </div>
+        </li>
       </ul>
       <div className="nav-login-cart">
         {loggedIn ? (
@@ -46,7 +50,6 @@ const Navbar = ({ loggedIn, onLogout, username }) => {
         ) : (
           <Link to='/login'><button>Login</button></Link>
         )}
-       
       </div>
     </div>
   );
