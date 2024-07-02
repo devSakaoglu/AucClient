@@ -1,0 +1,23 @@
+// src/Pages/ProfileLayout.jsx
+import React from 'react';
+import { Outlet, NavLink } from 'react-router-dom';
+import './ProfileLayout.css';
+
+const ProfileLayout = ({ onLogout }) => {
+  return (
+    <div className="profile-layout">
+      <div className="profile-sidebar">
+        <NavLink to="/profile" end activeClassName="active">Profile</NavLink>
+        <NavLink to="/profile/offers" activeClassName="active">My Offers</NavLink>
+        <NavLink to="/profile/listings" activeClassName="active">My Listings</NavLink>
+        <NavLink to="/profile/favorites" activeClassName="active">My Favorites</NavLink>
+        <button onClick={onLogout}>Logout</button>
+      </div>
+      <div className="profile-content">
+        <Outlet />
+      </div>
+    </div>
+  );
+};
+
+export default ProfileLayout;

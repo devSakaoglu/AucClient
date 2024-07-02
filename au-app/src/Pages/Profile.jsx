@@ -1,8 +1,7 @@
+// Profile.jsx
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import './Profile.css';
 
-const Profile = ({ username, onLogout }) => {
+const Profile = ({ username }) => {
   const [userInfo, setUserInfo] = useState({
     firstName: '',
     lastName: '',
@@ -27,32 +26,19 @@ const Profile = ({ username, onLogout }) => {
     fetchUserInfo();
   }, []);
 
-  const handleLogout = () => {
-    onLogout();
-  };
-
   return (
-    <div className="profile-container">
-      <div className="profile-sidebar">
-        <Link to='/profile'>Profile</Link>
-        <Link to='/offers'>My Offers</Link>
-        <Link to='/listings'>My Listings</Link>
-        <Link to='/favorites'>My Favorites</Link>
-        <button onClick={handleLogout}>Logout</button>
+    <div>
+      <h1>{username}'s Profile</h1>
+      <div className="user-info">
+        <h2>Personal Information</h2>
+        <p><strong>First Name:</strong> {userInfo.firstName}</p>
+        <p><strong>Last Name:</strong> {userInfo.lastName}</p>
+        <p><strong>Email:</strong> {userInfo.email}</p>
       </div>
-      <div className="profile-details">
-        <h1>{username}'s Profile</h1>
-        <div className="user-info">
-          <h2>Personal Information</h2>
-          <p><strong>First Name:</strong> {userInfo.firstName}</p>
-          <p><strong>Last Name:</strong> {userInfo.lastName}</p>
-          <p><strong>Email:</strong> {userInfo.email}</p>
-        </div>
-        <div className="card-info">
-          <h2>Card Information</h2>
-          <p><strong>Card Number:</strong> {userInfo.cardNumber}</p>
-          <p><strong>Expiry Date:</strong> {userInfo.cardExpiry}</p>
-        </div>
+      <div className="card-info">
+        <h2>Card Information</h2>
+        <p><strong>Card Number:</strong> {userInfo.cardNumber}</p>
+        <p><strong>Expiry Date:</strong> {userInfo.cardExpiry}</p>
       </div>
     </div>
   );

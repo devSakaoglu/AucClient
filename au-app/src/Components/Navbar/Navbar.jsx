@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Navbar.css';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import logo from '../Assets/logo.png';
 import profile_icon from '../Assets/profile_icon.png';
 import { instance } from '../../api';
 
 const Navbar = ({ loggedIn, onLogout, username }) => {
-  const [menu, setMenu] = useState("shop");
+  const location = useLocation();
 
   const handleLogout = async () => {
     try {
@@ -17,38 +17,57 @@ const Navbar = ({ loggedIn, onLogout, username }) => {
     }
   };
 
+  const handleRefresh = () => {
+    if (location.pathname === '/') {
+      window.location.reload();
+    }
+  };
+
   return (
     <div className='navbar'>
       <div className='nav-logo'>
-        <img src={logo} alt='Logo' />
-        <p>Auction House</p>
+        <Link to='/' onClick={handleRefresh}>
+          <img src={logo} alt='Logo' />
+          <p>Auction House</p>
+        </Link>
       </div>
       <ul className="nav-menu">
-        <li onClick={() => { setMenu("shop") }}><Link style={{ textDecoration: 'none' }} to='/'>Shop{menu === "shop" ? <hr /> : null}</Link></li>
+        <li>
+          <NavLink
+            to='/'
+            className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+          >
+            Shop
+          </NavLink>
+        </li>
         <li className="category-dropdown">
           <span>Category</span>
           <div className="dropdown-content">
-            <Link to="/mens">Men</Link>
-            <Link to="/womens">Women</Link>
-            <Link to="/kids">Kids</Link>
+            <NavLink to="/mens" className={({ isActive }) => (isActive ? 'active' : '')}>Men</NavLink>
+            <NavLink to="/womens" className={({ isActive }) => (isActive ? 'active' : '')}>Women</NavLink>
+            <NavLink to="/kids" className={({ isActive }) => (isActive ? 'active' : '')}>Kids</NavLink>
           </div>
         </li>
       </ul>
       <div className="nav-login-cart">
         {loggedIn ? (
           <div className='user-dropdown'>
-            <img src={profile_icon} alt='Profile' className='profile-icon' />
+            <Link to='/profile'>
+              <img src={profile_icon} alt='Profile' className='profile-icon' />
+            </Link>
             <span>{username}</span>
             <div className='user-dropdown-content'>
-              <Link to='/profile'>Profile</Link>
-              <Link to='/offers'>My Offers</Link>
-              <Link to='/listings'>My Listings</Link>
-              <Link to='/favorites'>My Favorites</Link>
+              <NavLink to='/profile' className={({ isActive }) => (isActive ? 'active' : '')}>Profile</NavLink>
+              <NavLink to='/profile/offers' className={({ isActive }) => (isActive ? 'active' : '')}>My Offers</NavLink>
+              <NavLink to='/profile/listings' className={({ isActive }) => (isActive ? 'active' : '')}>My Listings</NavLink>
+              <NavLink to='/profile/favorites' className={({ isActive }) => (isActive ? 'active' : '')}>My Favorites</NavLink>
               <button onClick={handleLogout}>Logout</button>
             </div>
           </div>
         ) : (
-          <Link to='/login'><button>Login</button></Link>
+          <Link to='/login'>
+            <button className="login-button">Login</button>
+          </Link>
         )}
       </div>
     </div>

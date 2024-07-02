@@ -34,6 +34,7 @@
 .profile-details {
   margin-left: 220px; /* Add margin to the left for the sidebar */
   padding: 20px;
+  width: calc(100% - 220px); /* Adjust width to fill remaining space */
 }
 
 .profile-details h1 {
