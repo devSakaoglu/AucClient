@@ -17,8 +17,9 @@ const Navbar = ({ loggedIn, onLogout, username }) => {
     }
   };
 
-  const handleRefresh = () => {
+  const handleRefresh = (e) => {
     if (location.pathname === '/') {
+      e.preventDefault();
       window.location.reload();
     }
   };
@@ -36,12 +37,13 @@ const Navbar = ({ loggedIn, onLogout, username }) => {
           <NavLink
             to='/'
             className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+            onClick={handleRefresh}
           >
             Shop
           </NavLink>
         </li>
         <li className="category-dropdown">
-          <span>Category</span>
+          <span>Categories</span>
           <div className="dropdown-content">
             <NavLink to="/mens" className={({ isActive }) => (isActive ? 'active' : '')}>Men</NavLink>
             <NavLink to="/womens" className={({ isActive }) => (isActive ? 'active' : '')}>Women</NavLink>
