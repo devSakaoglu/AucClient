@@ -1,40 +1,29 @@
 import React, { useContext, useEffect } from 'react';
-import './CSS/ShopCategory.css';
-import { ShopContext } from '../Context/ShopContext';
+import { Link } from 'react-router-dom';
 import Item from '../Components/Auction/Item';
+import { ShopContext } from '../Context/ShopContext';
 import dropdown_icon from '../Components/Assets/dropdown_icon.png';
-import '../Pages/ShopCategory.css'
+import '../Pages/ShopCategory.css';
 import axios from 'axios';
+
 axios.defaults.withCredentials = true;
 
-const ShopCategory = (props) => {
-
+const ShopCategory = ({ loggedIn, banner, category }) => {
   useEffect(() => {
     axios.get('http://localhost:5000/api/products/me')
       .then(response => {
-        console.log(response.data)
-      } 
-    ).catch(error => {
-      console.error('Error fetching data:', error);
-    });
-   
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
 
-   } , []);
-  const { all_product, addBid } = useContext(ShopContext);
-
-  const handlePlaceBid = (productId) => {
-    const bidAmount = parseFloat(prompt('Enter your bid amount:'));
-    if (bidAmount && !isNaN(bidAmount)) {
-      addBid(productId, bidAmount);
-      alert('Bid placed successfully!');
-    } else {
-      alert('Please enter a valid bid amount.');
-    }
-  };
+  const { all_product } = useContext(ShopContext);
 
   return (
     <div className='shop-category'>
-      <img className='shopcategory-banner' src={props.banner} alt="" />
+      <img className='shopcategory-banner' src={banner} alt="" />
       <div className='shopcategory-indexSort'>
         <p>
           <span>Showing 1-12</span> out of 36 products
@@ -45,7 +34,7 @@ const ShopCategory = (props) => {
       </div>
       <div className="shopcategory-products">
         {all_product.map((item, i) => {
-          if (props.category === item.category) {
+          if (category === item.category || category === "all") {
             return (
               <div key={i} className="shopcategory-product">
                 <Item
@@ -55,7 +44,15 @@ const ShopCategory = (props) => {
                   new_price={item.new_price}
                   old_price={item.old_price}
                 />
-                <button onClick={() => handlePlaceBid(item.id)}>Place Bid</button>
+                {loggedIn ? (
+                  <Link to={`/auction/${item.id}`}>
+                    <button>Place Bid</button>
+                  </Link>
+                ) : (
+                  <Link to="/login">
+                    <button>Place Bid</button>
+                  </Link>
+                )}
               </div>
             );
           } else {
