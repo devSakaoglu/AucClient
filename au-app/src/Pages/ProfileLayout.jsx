@@ -11,7 +11,7 @@ const ProfileLayout = ({ onLogout }) => {
         <NavLink to="/profile/offers" activeClassName="active">My Offers</NavLink>
         <NavLink to="/profile/listings" activeClassName="active">My Listings</NavLink>
         <NavLink to="/profile/favorites" activeClassName="active">My Favorites</NavLink>
-        <button onClick={onLogout}>Logout</button>
+        {/* <button onClick={onLogout}>Logout</button> */}
       </div>
       <div className="profile-content">
         <Outlet />
