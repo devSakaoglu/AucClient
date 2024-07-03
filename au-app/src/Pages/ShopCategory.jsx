@@ -1,58 +1,66 @@
-import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Item from '../Components/Auction/Item';
+// src/Pages/ShopCategory.jsx
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ShopContext } from '../Context/ShopContext';
 import dropdown_icon from '../Components/Assets/dropdown_icon.png';
 import '../Pages/ShopCategory.css';
-import axios from 'axios';
+import { instance as axios } from '../api';
 
 axios.defaults.withCredentials = true;
 
-const ShopCategory = ({ loggedIn, banner, category }) => {
+const ShopCategory = ({ loggedIn, banner, category, username }) => {
+  const [products, setProducts] = useState([]);
+  const { setAllProduct } = useContext(ShopContext);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    axios.get('http://localhost:5000/api/products/me')
+    axios.get('http://localhost:5000/api/products')
       .then(response => {
-        console.log(response.data);
+        setProducts(response.data);
+        setAllProduct(response.data); // Update context with all products
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, []);
+  }, [setAllProduct]);
 
-  const { all_product } = useContext(ShopContext);
+  const handlePlaceBid = (productId, productOwner) => {
+    if (loggedIn) {
+      if (productOwner !== username) {
+        navigate(`/auction/${productId}`);
+      } else {
+        alert("You cannot bid on your own product.");
+      }
+    } else {
+      navigate('/login');
+    }
+  };
 
   return (
     <div className='shop-category'>
       <img className='shopcategory-banner' src={banner} alt="" />
       <div className='shopcategory-indexSort'>
         <p>
-          <span>Showing 1-12</span> out of 36 products
+          <span>Showing 1-12</span> out of {products.length} products
         </p>
         <div className="shopcategory-sort">
           Sort by <img src={dropdown_icon} alt='' />
         </div>
       </div>
       <div className="shopcategory-products">
-        {all_product.map((item, i) => {
+        {products.map((item, i) => {
           if (category === item.category || category === "all") {
             return (
               <div key={i} className="shopcategory-product">
-                <Item
-                  id={item.id}
-                  name={item.name}
-                  image={item.image}
-                  new_price={item.new_price}
-                  old_price={item.old_price}
-                />
-                {loggedIn ? (
-                  <Link to={`/auction/${item.id}`}>
-                    <button>Place Bid</button>
-                  </Link>
-                ) : (
-                  <Link to="/login">
-                    <button>Place Bid</button>
-                  </Link>
-                )}
+                <div className="item">
+                  <img src={`http://localhost:5000/${item.images[0]}`} alt={item.name} />
+                  <div className="item-details">
+                    <h3>{item.name}</h3>
+                    <p>New Price: ${item.new_price ? item.new_price.toFixed(2) : 'N/A'}</p>
+                    {item.old_price && <p>Old Price: ${item.old_price.toFixed(2)}</p>}
+                  </div>
+                </div>
+                <button onClick={() => handlePlaceBid(item._id, item.appUser)}>Place Bid</button>
               </div>
             );
           } else {

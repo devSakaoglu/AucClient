@@ -1,4 +1,4 @@
-// src/App.jsx
+// src/App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './Components/Navbar/Navbar';
@@ -15,6 +15,7 @@ import Offers from './Components/Sidebar/Offers';
 import Listings from './Components/Sidebar/Listings';
 import Favorites from './Components/Sidebar/Favorites';
 import './App.css';
+import { ShopProvider } from './Context/ShopContext';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -42,14 +43,14 @@ function App() {
   };
 
   return (
-    <div>
+    <ShopProvider>
       <BrowserRouter>
         <Navbar loggedIn={loggedIn} onLogout={handleLogout} username={username} />
         <Routes>
-          <Route path='/' element={<ShopCategory category="all" banner="/path/to/banner.jpg" />} />
-          <Route path='/mens' element={<ShopCategory category="men" banner="/path/to/mens-banner.jpg" />} />
-          <Route path='/womens' element={<ShopCategory category="women" banner="/path/to/womens-banner.jpg" />} />
-          <Route path='/kids' element={<ShopCategory category="kid" banner="/path/to/kids-banner.jpg" />} />
+          <Route path='/' element={<ShopCategory category="all" banner="/path/to/banner.jpg" loggedIn={loggedIn} username={username} />} />
+          <Route path='/mens' element={<ShopCategory category="men" banner="/path/to/mens-banner.jpg" loggedIn={loggedIn} username={username} />} />
+          <Route path='/womens' element={<ShopCategory category="women" banner="/path/to/womens-banner.jpg" loggedIn={loggedIn} username={username} />} />
+          <Route path='/kids' element={<ShopCategory category="kid" banner="/path/to/kids-banner.jpg" loggedIn={loggedIn} username={username} />} />
           <Route path='/product/:productId' element={<Product />} />
           <Route path='/auction/:productId' element={<AuctionDetail user={username} />} />
           <Route path='/cart' element={<Cart />} />
@@ -65,7 +66,7 @@ function App() {
         </Routes>
         <Footer />
       </BrowserRouter>
-    </div>
+    </ShopProvider>
   );
 }
 

@@ -3,8 +3,8 @@ import './Register.css';
 import { instance } from '../api';
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,11 +13,6 @@ const Register = () => {
   const validateName = (name) => {
     const nameRegex = /^[A-Za-z\s]{3,}$/;
     return nameRegex.test(name) && !/\d/.test(name);
-  };
-
-  const validateSurname = (surname) => {
-    const surnameRegex = /^[A-Za-z\s]{3,}$/;
-    return surnameRegex.test(surname) && !/\d/.test(surname);
   };
 
   const validatePhone = (phone) => {
@@ -37,8 +32,8 @@ const Register = () => {
     e.preventDefault();
 
     if (
-      !validateName(name) ||
-      !validateSurname(surname) ||
+      !validateName(firstName) ||
+      !validateName(lastName) ||
       !validatePhone(phone) ||
       !validateEmail(email) ||
       !validatePassword(password)
@@ -48,20 +43,18 @@ const Register = () => {
     }
 
     try {
-      const response = await instance.post('signup', 
-        {
-          name,
-          surname,
-          phone,
-          email,
-          password,
-        },
-      );
+      const response = await instance.post('/signup', {
+        firstName,
+        lastName,
+        phone,
+        email,
+        password,
+      });
 
       if (response.status === 201) {
         alert('Registration successful! You can now login.');
-        setName('');
-        setSurname('');
+        setFirstName('');
+        setLastName('');
         setPhone('');
         setEmail('');
         setPassword('');
@@ -83,16 +76,16 @@ const Register = () => {
         {error && <p className="error-message">{error}</p>}
         <input
           type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter your name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          placeholder="Enter your first name"
           required
         />
         <input
           type="text"
-          value={surname}
-          onChange={(e) => setSurname(e.target.value)}
-          placeholder="Enter your surname"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          placeholder="Enter your last name"
           required
         />
         <input

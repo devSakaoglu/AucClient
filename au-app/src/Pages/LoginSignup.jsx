@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import './LoginSignup.css';
-import { instance } from '../api';
+import { instance as axios } from '../api';
 
 const LoginSignup = ({ onLogin }) => {
   const [email, setUsernameOrEmail] = useState('');
@@ -13,7 +13,7 @@ const LoginSignup = ({ onLogin }) => {
     e.preventDefault();
 
     try {
-      const response = await instance.post('/login', {
+      const response = await axios.post('/login', {
         email,
         password
       });
@@ -33,7 +33,7 @@ const LoginSignup = ({ onLogin }) => {
   };
 
   if (redirect) {
-    return <Navigate to='/shop' />;
+    return <Navigate to='/' />;
   }
 
   return (
