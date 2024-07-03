@@ -1,49 +1,11 @@
 .profile-container {
-  display: flex;
-}
-
-.profile-sidebar {
-  width: 200px;
-  background-color: #f9f9f9;
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  height: 100vh; /* Full height */
-  position: fixed; /* Fix sidebar to the left side */
-}
-
-.profile-sidebar a,
-.profile-sidebar button {
-  display: block;
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  color: #333;
-  text-decoration: none;
-  border: none;
-  background: none;
-  text-align: left;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.profile-sidebar a:hover,
-.profile-sidebar button:hover {
-  background-color: #e9e9e9;
-  color: #ff4141;
-}
-
-.profile-details {
-  margin-left: 220px; /* Add margin to the left for the sidebar */
-  padding: 20px;
-  width: calc(100% - 220px); /* Adjust width to fill remaining space */
-}
-
-.profile-details h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
 }
 
 .user-info,
-.card-info {
+.address-info {
   background-color: #fff;
   padding: 20px;
   margin-bottom: 20px;
@@ -52,17 +14,100 @@
 }
 
 .user-info h2,
-.card-info h2 {
+.address-info h2 {
   font-size: 20px;
   margin-bottom: 10px;
 }
 
 .user-info p,
-.card-info p {
+.address-info p {
   font-size: 16px;
   margin: 5px 0;
 }
 
 strong {
   font-weight: 600;
+}
+
+.address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-address-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-address-button:hover {
+  background-color: #0056b3;
+}
+
+.address-list {
+  margin-top: 20px;
+}
+
+.address-item {
+  background-color: #f1f1f1;
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.address-item p {
+  margin: 5px 0;
+}
+
+.address-item button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 5px;
+}
+
+.address-item button:hover {
+  background-color: #c82333;
+}
+
+.edit-button {
+  background-color: #ff851b;
+}
+
+.edit-button:hover {
+  background-color: #e67e22;
+}
+
+.address-form input {
+  display: block;
+  width: calc(100% - 20px);
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.address-form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.address-form button:hover {
+  background-color: #0056b3;
 }

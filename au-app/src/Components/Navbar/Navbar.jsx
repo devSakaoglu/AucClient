@@ -1,17 +1,19 @@
 import React from 'react';
 import './Navbar.css';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../Assets/logo.png';
 import profile_icon from '../Assets/profile_icon.png';
 import { instance } from '../../api';
 
 const Navbar = ({ loggedIn, onLogout, username }) => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       await instance.post('/logout', {});
       onLogout();
+      navigate('/'); // Logout sonrası anasayfaya yönlendir
     } catch (error) {
       console.error('Logout error:', error);
     }
