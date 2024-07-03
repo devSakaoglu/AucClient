@@ -3,8 +3,8 @@ import './Register.css';
 import { instance } from '../api';
 
 const Register = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [name, setFirstName] = useState('');
+  const [surname, setLastName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,8 +32,8 @@ const Register = () => {
     e.preventDefault();
 
     if (
-      !validateName(firstName) ||
-      !validateName(lastName) ||
+      !validateName(name) ||
+      !validateName(surname) ||
       !validatePhone(phone) ||
       !validateEmail(email) ||
       !validatePassword(password)
@@ -44,8 +44,8 @@ const Register = () => {
 
     try {
       const response = await instance.post('/signup', {
-        firstName,
-        lastName,
+        name,
+        surname,
         phone,
         email,
         password,
@@ -76,14 +76,14 @@ const Register = () => {
         {error && <p className="error-message">{error}</p>}
         <input
           type="text"
-          value={firstName}
+          value={name}
           onChange={(e) => setFirstName(e.target.value)}
           placeholder="Enter your first name"
           required
         />
         <input
           type="text"
-          value={lastName}
+          value={surname}
           onChange={(e) => setLastName(e.target.value)}
           placeholder="Enter your last name"
           required

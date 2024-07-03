@@ -1,12 +1,15 @@
-// src/Components/Sidebar/Listings.jsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // useNavigate import edildi
 import { instance as axios } from '../../api';
+import './Listings.css';
 
 const Listings = () => {
   const [listings, setListings] = useState([]);
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [image, setImage] = useState(null);
+  const [startPrice, setStartPrice] = useState('');
+  const navigate = useNavigate(); // useNavigate tanımlandı
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -28,6 +31,7 @@ const Listings = () => {
     formData.append('name', name);
     formData.append('category', category);
     formData.append('images', image);
+    formData.append('startPrice', startPrice);
 
     try {
       const response = await axios.post('/products', formData, {
@@ -40,6 +44,7 @@ const Listings = () => {
         setName('');
         setCategory('');
         setImage(null);
+        setStartPrice('');
       }
     } catch (error) {
       console.error('Error adding listing:', error);
@@ -50,10 +55,25 @@ const Listings = () => {
     setImage(e.target.files[0]);
   };
 
+  const handleDeleteListing = async (id) => {
+    try {
+      const response = await axios.delete(`/products/${id}`);
+      if (response.status === 200) {
+        setListings(listings.filter(listing => listing._id !== id));
+      }
+    } catch (error) {
+      console.error('Error deleting listing:', error);
+    }
+  };
+
+  const handleNavigate = (id) => {
+    navigate(`/auction/${id}`);
+  };
+
   return (
-    <div>
+    <div className="listings-container">
       <h1>My Listings</h1>
-      <div>
+      <div className="listing-form">
         <input
           type="text"
           value={name}
@@ -69,6 +89,13 @@ const Listings = () => {
           required
         />
         <input
+          type="number"
+          value={startPrice}
+          onChange={(e) => setStartPrice(e.target.value)}
+          placeholder="Starting Price"
+          required
+        />
+        <input
           type="file"
           onChange={handleImageChange}
           accept="image/*"
@@ -76,12 +103,25 @@ const Listings = () => {
         />
         <button onClick={handleAddListing}>Add Listing</button>
       </div>
-      <div>
+      <div className="listings-grid">
         {listings.map((listing, index) => (
-          <div key={index}>
-            <img src={`http://localhost:5000/${listing.images[0]}`} alt={listing.name} style={{ width: '100px' }} />
+          <div 
+            key={index} 
+            className="listing-item"
+            onClick={() => handleNavigate(listing._id)} // OnClick event eklendi
+          >
+            <img src={`http://localhost:5000/${listing.images[0]}`} alt={listing.name} />
             <p>{listing.name}</p>
             <p>{listing.category}</p>
+            <button 
+              className="delete-button" 
+              onClick={(e) => {
+                e.stopPropagation(); // Click eventinin propagation'ını durdurmak için
+                handleDeleteListing(listing._id);
+              }}
+            >
+              Delete
+            </button>
           </div>
         ))}
       </div>

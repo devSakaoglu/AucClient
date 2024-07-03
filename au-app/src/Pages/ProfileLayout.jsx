@@ -8,9 +8,10 @@ const ProfileLayout = ({ onLogout }) => {
     <div className="profile-layout">
       <div className="profile-sidebar">
         <NavLink to="/profile" end activeClassName="active">Profile</NavLink>
-        <NavLink to="/profile/offers" activeClassName="active">My Offers</NavLink>
-        <NavLink to="/profile/listings" activeClassName="active">My Listings</NavLink>
-        <NavLink to="/profile/favorites" activeClassName="active">My Favorites</NavLink>
+        <NavLink to="/profile/offers" activeClassName="active">My Bids</NavLink>
+        <NavLink to="/profile/listings" activeClassName="active">Listed Products</NavLink>
+        <NavLink to="/profile/reserved-products" activeClassName="active">Reserved Products</NavLink>
+        {/* <NavLink to="/profile/favorites" activeClassName="active">My Favorites</NavLink> */}
         {/* <button onClick={onLogout}>Logout</button> */}
       </div>
       <div className="profile-content">

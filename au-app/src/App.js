@@ -16,6 +16,8 @@ import Listings from './Components/Sidebar/Listings';
 import Favorites from './Components/Sidebar/Favorites';
 import './App.css';
 import { ShopProvider } from './Context/ShopContext';
+import ReservedProducts from './Components/Sidebar/ReservedProducts';
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -61,6 +63,7 @@ function App() {
             <Route path='offers' element={<Offers />} />
             <Route path='listings' element={<Listings />} />
             <Route path='favorites' element={<Favorites />} />
+            <Route path="reserved-products" element={<ReservedProducts />} />
           </Route>
           <Route path='*' element={<Navigate to={loggedIn ? "/" : "/login"} />} />
         </Routes>
