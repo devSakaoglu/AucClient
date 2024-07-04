@@ -11,7 +11,7 @@ const ReservedProducts = () => {
   useEffect(() => {
     const fetchReservedProducts = async () => {
       try {
-        const response = await axios.get('/reserved-products');
+        const response = await axios.get('/reservedProducts');
         if (response.status === 200) {
           setReservedProducts(response.data);
         }
