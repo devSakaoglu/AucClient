@@ -9,7 +9,7 @@ const Profile = ({ username }) => {
     email: '',
     phone: ''
   });
-  const [addresses, setAddresses] = useState([]);
+  const [address, setAddress] = useState(null);
   const [newAddress, setNewAddress] = useState({
     city: '',
     street: '',
@@ -22,10 +22,10 @@ const Profile = ({ username }) => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await axios.get('/me');
+        const response = await axios.get('/me', { withCredentials: true });
         if (response.status === 200) {
           setUserInfo(response.data);
-          setAddresses(response.data.addresses || []);
+          setAddress(response.data.Addresses || null);
         }
       } catch (error) {
         console.error('Error fetching user info:', error);
@@ -36,9 +36,9 @@ const Profile = ({ username }) => {
 
   const handleAddAddress = async () => {
     try {
-      const response = await axios.post('/addresses', newAddress);
+      const response = await axios.post('/addresses', newAddress, { withCredentials: true });
       if (response.status === 201) {
-        setAddresses([response.data]);
+        setAddress(response.data);
         setNewAddress({ city: '', street: '', country: '', description: '' });
         setShowAddForm(false);
       }
@@ -49,12 +49,9 @@ const Profile = ({ username }) => {
 
   const handleUpdateAddress = async () => {
     try {
-      const response = await axios.patch(`/addresses/${editAddressId}`, newAddress);
+      const response = await axios.patch(`/addresses/${editAddressId}`, newAddress, { withCredentials: true });
       if (response.status === 200) {
-        const updatedAddresses = addresses.map((address) =>
-          address._id === editAddressId ? response.data : address
-        );
-        setAddresses(updatedAddresses);
+        setAddress(response.data);
         setNewAddress({ city: '', street: '', country: '', description: '' });
         setShowAddForm(false);
         setEditAddressId(null);
@@ -66,9 +63,9 @@ const Profile = ({ username }) => {
 
   const handleDeleteAddress = async (addressId) => {
     try {
-      const response = await axios.delete(`/addresses/${addressId}`);
+      const response = await axios.delete(`/addresses/${addressId}`, { withCredentials: true });
       if (response.status === 200) {
-        setAddresses([]);
+        setAddress(null);
         setShowAddForm(true);
       }
     } catch (error) {
@@ -100,14 +97,14 @@ const Profile = ({ username }) => {
       <div className="address-info">
         <div className="address-header">
           <h2>Addresses</h2>
-          {addresses.length === 0 && (
+          {!address && (
             <button className="add-address-button" onClick={() => {
               setNewAddress({ city: '', street: '', country: '', description: '' });
               setShowAddForm(true);
             }}>
               + Add New Address
             </button>
-          )} 
+          )}
         </div>
         {showAddForm && (
           <div className="address-form">
@@ -147,17 +144,15 @@ const Profile = ({ username }) => {
             </button>
           </div>
         )}
-        {addresses.length > 0 && (
+        {address && (
           <div className="address-list">
-            {addresses.map((address, index) => (
-              <div key={index} className="address-item">
-                <p>{address.street}</p>
-                <p>{address.city} / {address.country}</p>
-                <p>{address.description}</p>
-                <button className="delete-button" onClick={() => handleDeleteAddress(address._id)}>Delete</button>
-                <button className="edit-button" onClick={() => handleEditAddress(address)}>Edit Address</button>
-              </div>
-            ))}
+            <div className="address-item">
+              <p>{address.street}</p>
+              <p>{address.city} / {address.country}</p>
+              <p>{address.description}</p>
+              <button className="delete-button" onClick={() => handleDeleteAddress(address._id)}>Delete</button>
+              <button className="edit-button" onClick={() => handleEditAddress(address)}>Edit Address</button>
+            </div>
           </div>
         )}
       </div>

@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './Components/Navbar/Navbar';
@@ -17,7 +16,6 @@ import Favorites from './Components/Sidebar/Favorites';
 import './App.css';
 import { ShopProvider } from './Context/ShopContext';
 import ReservedProducts from './Components/Sidebar/ReservedProducts';
-
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -50,9 +48,12 @@ function App() {
         <Navbar loggedIn={loggedIn} onLogout={handleLogout} username={username} />
         <Routes>
           <Route path='/' element={<ShopCategory category="all" banner="/path/to/banner.jpg" loggedIn={loggedIn} username={username} />} />
-          <Route path='/mens' element={<ShopCategory category="men" banner="/path/to/mens-banner.jpg" loggedIn={loggedIn} username={username} />} />
-          <Route path='/womens' element={<ShopCategory category="women" banner="/path/to/womens-banner.jpg" loggedIn={loggedIn} username={username} />} />
-          <Route path='/kids' element={<ShopCategory category="kid" banner="/path/to/kids-banner.jpg" loggedIn={loggedIn} username={username} />} />
+          <Route path='/vintage' element={<ShopCategory category="Vintage" banner="/path/to/vintage-banner.jpg" loggedIn={loggedIn} username={username} />} />
+          <Route path='/electronics' element={<ShopCategory category="Electronics" banner="/path/to/electronics-banner.jpg" loggedIn={loggedIn} username={username} />} />
+          <Route path='/fashion' element={<ShopCategory category="Fashion" banner="/path/to/fashion-banner.jpg" loggedIn={loggedIn} username={username} />} />
+          <Route path='/jewelry' element={<ShopCategory category="Jewelry" banner="/path/to/jewelry-banner.jpg" loggedIn={loggedIn} username={username} />} />
+          <Route path='/books' element={<ShopCategory category="Books" banner="/path/to/books-banner.jpg" loggedIn={loggedIn} username={username} />} />
+          <Route path='/art' element={<ShopCategory category="Art" banner="/path/to/art-banner.jpg" loggedIn={loggedIn} username={username} />} />
           <Route path='/product/:productId' element={<Product />} />
           <Route path='/auction/:productId' element={<AuctionDetail user={username} />} />
           <Route path='/cart' element={<Cart />} />

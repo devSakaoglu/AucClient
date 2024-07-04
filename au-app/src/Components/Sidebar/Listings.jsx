@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // useNavigate import edildi
+import { useNavigate } from 'react-router-dom';
 import { instance as axios } from '../../api';
 import './Listings.css';
 
@@ -9,7 +9,9 @@ const Listings = () => {
   const [category, setCategory] = useState('');
   const [image, setImage] = useState(null);
   const [startPrice, setStartPrice] = useState('');
-  const navigate = useNavigate(); // useNavigate tanımlandı
+  const navigate = useNavigate();
+
+  const categories = ['Vintage', 'Electronics', 'Fashion', 'Jewelry', 'Books', 'Art'];
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -81,13 +83,16 @@ const Listings = () => {
           placeholder="Product Name"
           required
         />
-        <input
-          type="text"
+        <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          placeholder="Category"
           required
-        />
+        >
+          <option value="" disabled>Select Category</option>
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>{cat}</option>
+          ))}
+        </select>
         <input
           type="number"
           value={startPrice}
@@ -108,7 +113,7 @@ const Listings = () => {
           <div 
             key={index} 
             className="listing-item"
-            onClick={() => handleNavigate(listing._id)} // OnClick event eklendi
+            onClick={() => handleNavigate(listing._id)}
           >
             <img src={`http://localhost:5000/${listing.images[0]}`} alt={listing.name} />
             <p>{listing.name}</p>
@@ -116,7 +121,7 @@ const Listings = () => {
             <button 
               className="delete-button" 
               onClick={(e) => {
-                e.stopPropagation(); // Click eventinin propagation'ını durdurmak için
+                e.stopPropagation();
                 handleDeleteListing(listing._id);
               }}
             >
