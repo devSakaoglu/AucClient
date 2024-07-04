@@ -29,13 +29,13 @@
 .profile-sidebar a.active,
 .profile-sidebar button.active {
   background-color: #e9e9e9;
-  color: #ff4141;
+  color: #ce1417;
 }
 
 .profile-sidebar a:hover,
 .profile-sidebar button:hover {
   background-color: #e9e9e9;
-  color: #ff4141;
+  color: #ce1417;
 }
 
 .profile-content {

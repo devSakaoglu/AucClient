@@ -1,27 +1,70 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+}
+
 .listings-container {
-  max-width: 800px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 1400px;
   padding: 20px;
+  box-sizing: border-box;
+  margin: 0 auto; /* Container'ı ortalar */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px; /* Başlık ile form arasında boşluk bırakır */
+}
+
+.listing-form-container {
+  display: flex;
+  justify-content: center; /* İçeriği yatayda ortalar */
+  align-items: center; /* İçeriği dikeyde ortalar */
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.list-icon {
+  max-width: 400px; /* Görselin maksimum genişliğini belirler */
+  height: auto; /* Görselin yüksekliğini orantılı olarak ayarlar */
+  margin-left: 20px; /* Form ile görsel arasına boşluk koyar */
+  opacity: 0; /* Animasyon başlamadan önce görünmez yapar */
+  animation: fadeIn 1s ease-in-out forwards; /* Animasyonu uygular */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5); /* Küçükten büyüğe animasyon */
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .listing-form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px; /* Formun genişliğini artırmak için */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .listing-form input,
 .listing-form select,
 .listing-form button {
   width: 100%;
-  max-width: 400px;
+  max-width: 600px; /* Input ve select alanlarının maksimum genişliğini artırmak için */
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 12px;
   border-radius: 4px;
   border: 1px solid #ccc;
 }
@@ -30,7 +73,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 400px;
+  max-width: 600px;
   margin-bottom: 10px;
 }
 
@@ -53,40 +96,35 @@
 
 .listings-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
 }
 
 .listing-item {
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: #fff;
   padding: 10px;
-  text-align: center;
-  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  text-align: center;
 }
 
 .listing-item img {
   max-width: 100%;
-  height: auto;
   border-radius: 8px;
   margin-bottom: 10px;
 }
 
-.listing-item p {
-  margin: 5px 0;
-}
-
 .delete-button {
-  background-color: #dc3545;
+  background-color: red;
   color: white;
   border: none;
-  padding: 10px;
+  padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  margin-top: 10px;
 }
 
 .delete-button:hover {
-  background-color: #c82333;
+  background-color: darkred;
 }

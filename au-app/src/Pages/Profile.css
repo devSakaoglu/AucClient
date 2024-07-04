@@ -15,14 +15,15 @@
 
 .user-info h2,
 .address-info h2 {
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-size: 24px;
+  margin-bottom: 15px;
 }
 
 .user-info p,
 .address-info p {
-  font-size: 16px;
-  margin: 5px 0;
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 10px 0;
 }
 
 strong {
@@ -39,8 +40,8 @@ strong {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
+  padding: 12px 24px;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -56,25 +57,26 @@ strong {
 .address-item {
   background-color: #f1f1f1;
   padding: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   border-radius: 5px;
   position: relative;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .address-item p {
-  margin: 5px 0;
+  font-size: 16px;
+  margin: 8px 0;
 }
 
 .address-item button {
   background-color: #dc3545;
   color: white;
   border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
+  padding: 8px 16px;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-right: 5px;
+  margin-right: 8px;
 }
 
 .address-item button:hover {
@@ -89,21 +91,24 @@ strong {
   background-color: #e67e22;
 }
 
+.address-form {
+  margin-top: 20px;
+}
+
 .address-form input {
-  display: block;
-  width: calc(100% - 20px);
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 4px;
+  width: calc(100% - 24px);
+  margin-bottom: 15px;
+  padding: 12px;
+  border-radius: 5px;
   border: 1px solid #ccc;
 }
 
 .address-form button {
-  padding: 10px 20px;
+  padding: 12px 24px;
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Navbar.css';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import logo from '../Assets/logo.png';
+import logo from '../Assets/logo111.png';
 import profile_icon from '../Assets/profile_icon.png';
 import { instance } from '../../api';
 
@@ -31,7 +31,7 @@ const Navbar = ({ loggedIn, onLogout, username }) => {
       <div className='nav-logo'>
         <Link to='/' onClick={handleRefresh}>
           <img src={logo} alt='Logo' />
-          <p>Auction House</p>
+          
         </Link>
       </div>
       <ul className="nav-menu">
