@@ -53,7 +53,7 @@ const ReservedProducts = () => {
               <p>Price: ${product.maxBidPrice}</p>
               <StripeCheckout
                 token={(token) => handleToken(token, product)}
-                stripeKey="your_PUBLISHABLE_stripekey"
+                stripeKey="pk_test_51P2HbeDrUQTHv2dXXgpCdaExm3FjJXVf4aPOu3Efa9wlQkKVXfcyaPLZwsRDo9CvvDwD5nJiK8RHl0O5nUSqbAIu00U0UHc64Q"
                 amount={product.maxBidPrice * 100} // Stripe expects the amount in cents
                 currency="USD"
                 name="Auction House"

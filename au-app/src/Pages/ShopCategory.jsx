@@ -37,7 +37,11 @@ const ShopCategory = ({ loggedIn, banner, category, username }) => {
 
   const getRemainingTime = (auctionStartDate, auctionDuration) => {
     const auctionEndDate = new Date(auctionStartDate);
-    auctionEndDate.setDate(auctionEndDate.getDate() + parseInt(auctionDuration, 10));
+    if (parseInt(auctionDuration, 10) === 0) {
+      auctionEndDate.setMinutes(auctionEndDate.getMinutes() + 5);
+    } else {
+      auctionEndDate.setDate(auctionEndDate.getDate() + parseInt(auctionDuration, 10));
+    }
 
     const now = new Date();
     const timeDifference = auctionEndDate - now;

@@ -9,6 +9,7 @@ const AuctionDetail = ({ user }) => {
   const [bids, setBids] = useState([]);
   const [bidAmount, setBidAmount] = useState('');
   const [remainingTime, setRemainingTime] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -33,7 +34,13 @@ const AuctionDetail = ({ user }) => {
   useEffect(() => {
     if (product) {
       const auctionEndTime = new Date(product.auctionStartDate);
-      auctionEndTime.setDate(auctionEndTime.getDate() + parseInt(product.auctionDuration, 10));
+      const duration = parseInt(product.auctionDuration, 10);
+
+      if (duration === 0) {
+        auctionEndTime.setMinutes(auctionEndTime.getMinutes() + 5);
+      } else {
+        auctionEndTime.setDate(auctionEndTime.getDate() + duration);
+      }
 
       const updateRemainingTime = () => {
         const now = new Date();
@@ -58,7 +65,7 @@ const AuctionDetail = ({ user }) => {
 
   const handleBid = async () => {
     if (user._id === product.appUser._id) {
-      alert("You cannot bid on your own product.");
+      setErrorMessage("You cannot bid on your own product.");
       return;
     }
 
@@ -68,6 +75,7 @@ const AuctionDetail = ({ user }) => {
         const newBid = { bidPrice: bidAmount, appUser: { name: user.name, surname: user.surname } };
         setBids([newBid, ...bids]);
         setBidAmount('');
+        setErrorMessage('');
 
         // Fetch updated product and bids
         const updatedProductResponse = await axios.get(`/products/${productId}`);
@@ -81,7 +89,11 @@ const AuctionDetail = ({ user }) => {
         }
       }
     } catch (error) {
-      console.error('Error placing bid:', error);
+      if (error.response && error.response.data.message) {
+        setErrorMessage(error.response.data.message);
+      } else {
+        console.error('Error placing bid:', error);
+      }
     }
   };
 
@@ -104,6 +116,7 @@ const AuctionDetail = ({ user }) => {
           <p>Starting Price: ${product.startPrice ? product.startPrice.toFixed(2) : 'N/A'}</p>
           <p>Highest Bid: ${highestBid.toFixed(2)}</p>
           <p>Auction Ends In: {remainingTime}</p>
+          <p className="product-status">{product.productStatus}</p>
           <div className="button-group">
             {user ? (
               <>
@@ -119,6 +132,7 @@ const AuctionDetail = ({ user }) => {
               <p>Please <Link to="/login">login</Link> to place a bid.</p>
             )}
           </div>
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
         </div>
       </div>
       <div className="bids-list">
