@@ -37,7 +37,11 @@ const ShopCategory = ({ loggedIn, banner, category, username }) => {
 
   const getRemainingTime = (auctionStartDate, auctionDuration) => {
     const auctionEndDate = new Date(auctionStartDate);
-    auctionEndDate.setDate(auctionEndDate.getDate() + parseInt(auctionDuration, 10));
+    if (parseInt(auctionDuration, 10) === 0) {
+      auctionEndDate.setMinutes(auctionEndDate.getMinutes() + 5);
+    } else {
+      auctionEndDate.setDate(auctionEndDate.getDate() + parseInt(auctionDuration, 10));
+    }
 
     const now = new Date();
     const timeDifference = auctionEndDate - now;
@@ -74,6 +78,9 @@ const ShopCategory = ({ loggedIn, banner, category, username }) => {
               <img src={`http://localhost:5000/${item.images[0]}`} alt={item.name} />
               <div className="item-details">
                 <h3>{item.name}</h3>
+                {item.appUser && (
+                  <p>Seller: {item.appUser.name} {item.appUser.surname}</p>
+                )}
                 <p>Newest Price: ${item.maxBidPrice ? item.maxBidPrice.toFixed(2) : 'N/A'}</p>
                 {item.old_price && <p>Old Price: ${item.old_price.toFixed(2)}</p>}
                 <p className="countdown-timer">

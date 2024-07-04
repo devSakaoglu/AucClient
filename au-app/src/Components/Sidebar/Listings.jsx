@@ -15,10 +15,11 @@ const Listings = () => {
   const categories = ['Vintage', 'Electronics', 'Fashion', 'Jewelry', 'Books', 'Art', 'Music Instruments'];
   const auctionDurations = Array.from({ length: 16 }, (_, i) => i); // Generates numbers from 0 to 15
 
+
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const response = await axios.get('/products/me');
+        const response = await axios.get('/products/me/:status');
         if (response.status === 200) {
           setListings(response.data);
         }
@@ -68,7 +69,11 @@ const Listings = () => {
         setListings(listings.filter(listing => listing._id !== id));
       }
     } catch (error) {
-      console.error('Error deleting listing:', error);
+      if (error.response && error.response.data) {
+        alert(error.response.data);
+      } else {
+        console.error('Error deleting listing:', error);
+      }
     }
   };
 
