@@ -71,3 +71,8 @@
 .bid-item p {
   margin: 5px 0;
 }
+
+.countdown-timer {
+  color: red;
+  font-weight: bold;
+}
