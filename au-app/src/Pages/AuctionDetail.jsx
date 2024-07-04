@@ -8,6 +8,7 @@ const AuctionDetail = ({ user }) => {
   const [product, setProduct] = useState(null);
   const [bids, setBids] = useState([]);
   const [bidAmount, setBidAmount] = useState('');
+  const [remainingTime, setRemainingTime] = useState('');
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -28,6 +29,32 @@ const AuctionDetail = ({ user }) => {
 
     fetchProduct();
   }, [productId]);
+
+  useEffect(() => {
+    if (product) {
+      const auctionEndTime = new Date(product.auctionStartDate);
+      auctionEndTime.setDate(auctionEndTime.getDate() + parseInt(product.auctionDuration, 10));
+
+      const updateRemainingTime = () => {
+        const now = new Date();
+        const timeDifference = auctionEndTime - now;
+
+        if (timeDifference <= 0) {
+          setRemainingTime("Auction ended");
+        } else {
+          const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+          setRemainingTime(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+        }
+      };
+
+      const timerId = setInterval(updateRemainingTime, 1000);
+      return () => clearInterval(timerId);
+    }
+  }, [product]);
 
   const handleBid = async () => {
     if (user._id === product.appUser._id) {
@@ -75,6 +102,7 @@ const AuctionDetail = ({ user }) => {
           <p>{product.description}</p>
           <p>Starting Price: ${product.startPrice ? product.startPrice.toFixed(2) : 'N/A'}</p>
           <p>Highest Bid: ${highestBid.toFixed(2)}</p>
+          <p>Auction Ends In: {remainingTime}</p>
           <div className="button-group">
             {user ? (
               <>

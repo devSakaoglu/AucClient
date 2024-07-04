@@ -17,13 +17,23 @@ import './App.css';
 import { ShopProvider } from './Context/ShopContext';
 import ReservedProducts from './Components/Sidebar/ReservedProducts';
 
+const categoryBanners = {
+  "Vintage": "/path/to/vintage-banner.jpg",
+  "Electronics": "/path/to/electronics-banner.jpg",
+  "Fashion": "/path/to/fashion-banner.jpg",
+  "Jewelry": "/path/to/jewelry-banner.jpg",
+  "Books": "/path/to/books-banner.jpg",
+  "Art": "/path/to/art-banner.jpg",
+  "Music Instruments": "/path/to/music-instruments-banner.jpg",
+  "all": "/path/to/banner.jpg",
+};
+
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
-
     if (storedUsername) {
       setUsername(storedUsername);
       setLoggedIn(true);
@@ -47,13 +57,13 @@ function App() {
       <BrowserRouter>
         <Navbar loggedIn={loggedIn} onLogout={handleLogout} username={username} />
         <Routes>
-          <Route path='/' element={<ShopCategory category="all" banner="/path/to/banner.jpg" loggedIn={loggedIn} username={username} />} />
-          <Route path='/vintage' element={<ShopCategory category="Vintage" banner="/path/to/vintage-banner.jpg" loggedIn={loggedIn} username={username} />} />
-          <Route path='/electronics' element={<ShopCategory category="Electronics" banner="/path/to/electronics-banner.jpg" loggedIn={loggedIn} username={username} />} />
-          <Route path='/fashion' element={<ShopCategory category="Fashion" banner="/path/to/fashion-banner.jpg" loggedIn={loggedIn} username={username} />} />
-          <Route path='/jewelry' element={<ShopCategory category="Jewelry" banner="/path/to/jewelry-banner.jpg" loggedIn={loggedIn} username={username} />} />
-          <Route path='/books' element={<ShopCategory category="Books" banner="/path/to/books-banner.jpg" loggedIn={loggedIn} username={username} />} />
-          <Route path='/art' element={<ShopCategory category="Art" banner="/path/to/art-banner.jpg" loggedIn={loggedIn} username={username} />} />
+          {Object.keys(categoryBanners).map(category => (
+            <Route 
+              key={category} 
+              path={category === "all" ? "/" : `/${category.toLowerCase().replace(" ", "-")}`} 
+              element={<ShopCategory category={category} banner={categoryBanners[category]} loggedIn={loggedIn} username={username} />} 
+            />
+          ))}
           <Route path='/product/:productId' element={<Product />} />
           <Route path='/auction/:productId' element={<AuctionDetail user={username} />} />
           <Route path='/cart' element={<Cart />} />

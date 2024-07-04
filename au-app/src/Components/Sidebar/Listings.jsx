@@ -9,9 +9,11 @@ const Listings = () => {
   const [category, setCategory] = useState('');
   const [image, setImage] = useState(null);
   const [startPrice, setStartPrice] = useState('');
+  const [auctionDuration, setAuctionDuration] = useState('');
   const navigate = useNavigate();
 
-  const categories = ['Vintage', 'Electronics', 'Fashion', 'Jewelry', 'Books', 'Art'];
+  const categories = ['Vintage', 'Electronics', 'Fashion', 'Jewelry', 'Books', 'Art', 'Music Instruments'];
+  const auctionDurations = Array.from({ length: 16 }, (_, i) => i); // Generates numbers from 0 to 15
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -34,6 +36,7 @@ const Listings = () => {
     formData.append('category', category);
     formData.append('images', image);
     formData.append('startPrice', startPrice);
+    formData.append('auctionDuration', auctionDuration);
 
     try {
       const response = await axios.post('/products', formData, {
@@ -47,6 +50,7 @@ const Listings = () => {
         setCategory('');
         setImage(null);
         setStartPrice('');
+        setAuctionDuration('');
       }
     } catch (error) {
       console.error('Error adding listing:', error);
@@ -93,6 +97,16 @@ const Listings = () => {
             <option key={cat} value={cat}>{cat}</option>
           ))}
         </select>
+        <select
+          value={auctionDuration}
+          onChange={(e) => setAuctionDuration(e.target.value)}
+          required
+        >
+          <option value="" disabled>Select Auction Duration</option>
+          {auctionDurations.map((duration) => (
+            <option key={duration} value={duration}>{duration} days</option>
+          ))}
+        </select>
         <input
           type="number"
           value={startPrice}
@@ -117,7 +131,7 @@ const Listings = () => {
           >
             <img src={`http://localhost:5000/${listing.images[0]}`} alt={listing.name} />
             <p>{listing.name}</p>
-            <p>{listing.category}</p>
+            <p>{listing.category.join(', ')}</p>
             <button 
               className="delete-button" 
               onClick={(e) => {

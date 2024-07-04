@@ -53,6 +53,7 @@ const Navbar = ({ loggedIn, onLogout, username }) => {
             <NavLink to="/jewelry" className={({ isActive }) => (isActive ? 'active' : '')}>Jewelry</NavLink>
             <NavLink to="/books" className={({ isActive }) => (isActive ? 'active' : '')}>Books</NavLink>
             <NavLink to="/art" className={({ isActive }) => (isActive ? 'active' : '')}>Art</NavLink>
+            <NavLink to="/music-instruments" className={({ isActive }) => (isActive ? 'active' : '')}>Music Instruments</NavLink>
           </div>
         </li>
       </ul>

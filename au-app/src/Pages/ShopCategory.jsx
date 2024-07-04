@@ -35,7 +35,26 @@ const ShopCategory = ({ loggedIn, banner, category, username }) => {
     }
   };
 
-  const filteredProducts = category === "all" ? products : products.filter(item => item.category === category);
+  const getRemainingTime = (auctionStartDate, auctionDuration) => {
+    const auctionEndDate = new Date(auctionStartDate);
+    auctionEndDate.setDate(auctionEndDate.getDate() + parseInt(auctionDuration, 10));
+
+    const now = new Date();
+    const timeDifference = auctionEndDate - now;
+
+    if (timeDifference <= 0) {
+      return "Auction ended";
+    } else {
+      const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+      return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+  };
+
+  const filteredProducts = category === "all" ? products : products.filter(item => item.category.includes(category));
 
   return (
     <div className='shop-category'>
@@ -57,6 +76,9 @@ const ShopCategory = ({ loggedIn, banner, category, username }) => {
                 <h3>{item.name}</h3>
                 <p>Newest Price: ${item.maxBidPrice ? item.maxBidPrice.toFixed(2) : 'N/A'}</p>
                 {item.old_price && <p>Old Price: ${item.old_price.toFixed(2)}</p>}
+                <p className="countdown-timer">
+                  {getRemainingTime(item.auctionStartDate, item.auctionDuration)}
+                </p>
               </div>
             </div>
             <button onClick={() => handlePlaceBid(item._id, item.appUser)}>Place Bid</button>
