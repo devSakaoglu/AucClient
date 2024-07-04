@@ -55,7 +55,7 @@ const ShopCategory = ({ loggedIn, banner, category, username }) => {
                   <img src={`http://localhost:5000/${item.images[0]}`} alt={item.name} />
                   <div className="item-details">
                     <h3>{item.name}</h3>
-                    <p>New Price: ${item.new_price ? item.new_price.toFixed(2) : 'N/A'}</p>
+                    <p>Newest Price: ${item.maxBidPrice ? item.maxBidPrice.toFixed(2) : 'N/A'}</p>
                     {item.old_price && <p>Old Price: ${item.old_price.toFixed(2)}</p>}
                   </div>
                 </div>

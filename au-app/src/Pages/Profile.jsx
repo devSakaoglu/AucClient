@@ -100,14 +100,14 @@ const Profile = ({ username }) => {
       <div className="address-info">
         <div className="address-header">
           <h2>Addresses</h2>
-          {/* {addresses.length === 0 && (
+          {addresses.length === 0 && (
             <button className="add-address-button" onClick={() => {
               setNewAddress({ city: '', street: '', country: '', description: '' });
               setShowAddForm(true);
             }}>
               + Add New Address
             </button>
-          )} */}
+          )} 
         </div>
         {showAddForm && (
           <div className="address-form">
