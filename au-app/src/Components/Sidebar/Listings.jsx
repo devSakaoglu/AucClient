@@ -15,6 +15,7 @@ const Listings = () => {
   const categories = ['Vintage', 'Electronics', 'Fashion', 'Jewelry', 'Books', 'Art', 'Music Instruments'];
   const auctionDurations = Array.from({ length: 16 }, (_, i) => i); // Generates numbers from 0 to 15
 
+
   useEffect(() => {
     const fetchListings = async () => {
       try {
