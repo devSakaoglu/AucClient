@@ -35,37 +35,33 @@ const ShopCategory = ({ loggedIn, banner, category, username }) => {
     }
   };
 
+  const filteredProducts = category === "all" ? products : products.filter(item => item.category === category);
+
   return (
     <div className='shop-category'>
       <img className='shopcategory-banner' src={banner} alt="" />
       <div className='shopcategory-indexSort'>
         <p>
-          <span>Showing 1-12</span> out of {products.length} products
+          <span>Showing 1-12</span> out of {filteredProducts.length} products
         </p>
         <div className="shopcategory-sort">
           Sort by <img src={dropdown_icon} alt='' />
         </div>
       </div>
       <div className="shopcategory-products">
-        {products.map((item, i) => {
-          if (category === item.category || category === "all") {
-            return (
-              <div key={i} className="shopcategory-product">
-                <div className="item">
-                  <img src={`http://localhost:5000/${item.images[0]}`} alt={item.name} />
-                  <div className="item-details">
-                    <h3>{item.name}</h3>
-                    <p>New Price: ${item.new_price ? item.new_price.toFixed(2) : 'N/A'}</p>
-                    {item.old_price && <p>Old Price: ${item.old_price.toFixed(2)}</p>}
-                  </div>
-                </div>
-                <button onClick={() => handlePlaceBid(item._id, item.appUser)}>Place Bid</button>
+        {filteredProducts.map((item, i) => (
+          <div key={i} className="shopcategory-product">
+            <div className="item">
+              <img src={`http://localhost:5000/${item.images[0]}`} alt={item.name} />
+              <div className="item-details">
+                <h3>{item.name}</h3>
+                <p>Newest Price: ${item.maxBidPrice ? item.maxBidPrice.toFixed(2) : 'N/A'}</p>
+                {item.old_price && <p>Old Price: ${item.old_price.toFixed(2)}</p>}
               </div>
-            );
-          } else {
-            return null;
-          }
-        })}
+            </div>
+            <button onClick={() => handlePlaceBid(item._id, item.appUser)}>Place Bid</button>
+          </div>
+        ))}
       </div>
     </div>
   );

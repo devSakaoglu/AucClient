@@ -47,9 +47,12 @@ const Navbar = ({ loggedIn, onLogout, username }) => {
         <li className="category-dropdown">
           <span>Categories</span>
           <div className="dropdown-content">
-            <NavLink to="/mens" className={({ isActive }) => (isActive ? 'active' : '')}>Men</NavLink>
-            <NavLink to="/womens" className={({ isActive }) => (isActive ? 'active' : '')}>Women</NavLink>
-            <NavLink to="/kids" className={({ isActive }) => (isActive ? 'active' : '')}>Kids</NavLink>
+            <NavLink to="/vintage" className={({ isActive }) => (isActive ? 'active' : '')}>Vintage</NavLink>
+            <NavLink to="/electronics" className={({ isActive }) => (isActive ? 'active' : '')}>Electronics</NavLink>
+            <NavLink to="/fashion" className={({ isActive }) => (isActive ? 'active' : '')}>Fashion</NavLink>
+            <NavLink to="/jewelry" className={({ isActive }) => (isActive ? 'active' : '')}>Jewelry</NavLink>
+            <NavLink to="/books" className={({ isActive }) => (isActive ? 'active' : '')}>Books</NavLink>
+            <NavLink to="/art" className={({ isActive }) => (isActive ? 'active' : '')}>Art</NavLink>
           </div>
         </li>
       </ul>
@@ -62,9 +65,10 @@ const Navbar = ({ loggedIn, onLogout, username }) => {
             <span>{username}</span>
             <div className='user-dropdown-content'>
               <NavLink to='/profile' className={({ isActive }) => (isActive ? 'active' : '')}>Profile</NavLink>
-              <NavLink to='/profile/offers' className={({ isActive }) => (isActive ? 'active' : '')}>My Offers</NavLink>
-              <NavLink to='/profile/listings' className={({ isActive }) => (isActive ? 'active' : '')}>My Listings</NavLink>
-              <NavLink to='/profile/favorites' className={({ isActive }) => (isActive ? 'active' : '')}>My Favorites</NavLink>
+              <NavLink to='/profile/offers' className={({ isActive }) => (isActive ? 'active' : '')}>My Bids</NavLink>
+              <NavLink to='/profile/listings' className={({ isActive }) => (isActive ? 'active' : '')}>Listed Products</NavLink>
+              <NavLink to='/profile/reserved-products' className={({ isActive }) => (isActive ? 'active' : '')}>Reserved Products</NavLink>
+              {/* <NavLink to='/profile/favorites' className={({ isActive }) => (isActive ? 'active' : '')}>My Favorites</NavLink> */}
               <button onClick={handleLogout}>Logout</button>
             </div>
           </div>
