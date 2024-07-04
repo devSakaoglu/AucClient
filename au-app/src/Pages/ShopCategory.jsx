@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShopContext } from '../Context/ShopContext';
-import dropdown_icon from '../Components/Assets/dropdown_icon.png';
 import '../Pages/ShopCategory.css';
 import { instance as axios } from '../api';
 
@@ -67,9 +66,7 @@ const ShopCategory = ({ loggedIn, banner, category, username }) => {
         <p>
           <span>Showing 1-12</span> out of {filteredProducts.length} products
         </p>
-        <div className="shopcategory-sort">
-          Sort by <img src={dropdown_icon} alt='' />
-        </div>
+     
       </div>
       <div className="shopcategory-products">
         {filteredProducts.map((item, i) => (

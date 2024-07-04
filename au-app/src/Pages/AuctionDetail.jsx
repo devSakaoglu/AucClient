@@ -115,7 +115,7 @@ const AuctionDetail = ({ user }) => {
           <p>{product.description}</p>
           <p>Starting Price: ${product.startPrice ? product.startPrice.toFixed(2) : 'N/A'}</p>
           <p>Highest Bid: ${highestBid.toFixed(2)}</p>
-          <p>Auction Ends In: {remainingTime}</p>
+          <p>Auction Ends In: <span className="countdown-timer">{remainingTime}</span></p>
           <p className="product-status">{product.productStatus}</p>
           <div className="button-group">
             {user ? (
