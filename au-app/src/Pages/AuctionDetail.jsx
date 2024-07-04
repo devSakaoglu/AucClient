@@ -99,6 +99,7 @@ const AuctionDetail = ({ user }) => {
         </div>
         <div className="product-info">
           <h2>{product.name}</h2>
+          <p>Seller: {product.appUser.name} {product.appUser.surname}</p>
           <p>{product.description}</p>
           <p>Starting Price: ${product.startPrice ? product.startPrice.toFixed(2) : 'N/A'}</p>
           <p>Highest Bid: ${highestBid.toFixed(2)}</p>
