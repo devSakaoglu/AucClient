@@ -1,3 +1,5 @@
+/* src/Pages/Navbar.css */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -100,11 +102,12 @@
   display: none;
   position: absolute;
   right: 0;
-  background-color: #f9f9f9;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff; /* Beyaz arka plan */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Gölge */
   z-index: 1;
   border-radius: 5px;
   margin-top: 5px;
+  min-width: 200px; /* Minimum genişlik */
 }
 
 .user-dropdown:hover .user-dropdown-content {
@@ -113,13 +116,13 @@
 
 .user-dropdown-content a,
 .user-dropdown-content button {
-  color: black;
-  padding: 16px 20px;
+  color: #333333; /* Siyah metin rengi */
+  padding: 12px 16px; /* Yatay ve dikey iç boşluk */
   text-decoration: none;
   display: block;
   width: 100%;
   text-align: left;
-  background-color: #f9f9f9;
+  background-color: transparent; /* Transparan arka plan */
   border: none;
   cursor: pointer;
   font-size: 16px;
@@ -127,7 +130,7 @@
 
 .user-dropdown-content a:hover,
 .user-dropdown-content button:hover {
-  background-color: #f1f1f1;
+  background-color: #f1f1f1; /* Hover durumda açık gri arka plan */
 }
 
 .login-button {
