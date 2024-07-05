@@ -28,7 +28,7 @@ function Offers() {
 
   return (
     <div className="offers-container">
-      <h1>My Offers</h1>
+      <h1>My Bids</h1>
       <div className="offers-grid">
         {offers.length > 0 ? (
           offers.map((offer, index) => (
